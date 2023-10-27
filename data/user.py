@@ -21,7 +21,7 @@ class User:
     last_name: str
     email: str
     gender: Gender
-    phone_number: str
+    phone: str
     birth_date: date
     subject: str
     hobby: Hobbies
@@ -35,11 +35,11 @@ user = User(
     'Alexey',
     'Kokorev',
     'test@gmail.ru',
-    Gender.male,
+    Gender.male.value,
     '1234567890',
-    date(15, 5, 1991),
+    date(1991, 5, 15),
     'Maths',
-    Hobbies.sports,
+    Hobbies.sports.value,
     'bat.png',
     'Bali, Ubud, 1',
     'NCR',

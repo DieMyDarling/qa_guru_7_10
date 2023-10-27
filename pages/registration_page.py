@@ -29,11 +29,11 @@ class RegistrationPage:
         browser.element(f'[value={value}] + label').click()
         return self
 
-    def fill_user_number(self, value):
+    def fill_phone(self, value):
         browser.element('#userNumber').should(be.blank).type(value)
         return self
 
-    def fill_date_of_birth(self, year, month, day):
+    def fill_birth_date(self, year, month, day):
         browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__month-select').all('option').element_by(have.exact_text(month)).click()
         browser.element('.react-datepicker__year-select').all('option').element_by(have.exact_text(year)).click()
@@ -72,6 +72,44 @@ class RegistrationPage:
         browser.element('.table').all('td').even.should(
             have.exact_texts(result))
         return self
+
+    def register_user(self, user):
+        (
+            self
+            .fill_first_name(user.first_name)
+            .fill_last_name(user.last_name)
+            .fill_user_email(user.email)
+            .select_gender(user.gender)
+            .fill_phone(user.phone)
+            .fill_birth_date(user.birth_date.strftime('%Y'),
+                             user.birth_date.strftime('%B'),
+                             user.birth_date.strftime('%d'))
+            .fill_subject(user.subject)
+            .fill_hobby(user.hobby)
+            .upload_picture(user.upload_picture)
+            .fill_current_address(user.current_address)
+            .fill_state(user.state)
+            .fill_city(user.city)
+            .submit()
+        )
+
+    def should_registered_user(self, user):
+        browser.element('.table').all('td').even.should(
+            have.exact_texts(
+                f'{user.first_name} {user.last_name}',
+                user.email,
+                user.gender,
+                user.user_number,
+                f"{user.date_of_birth.strftime('%d')} "
+                f"{user.date_of_birth.strftime('%B')},"
+                f"{user.date_of_birth.strftime('%Y')}",
+                user.subject,
+                user.hobby,
+                user.upload_picture,
+                user.current_address,
+                f'{user.state} {user.city}'
+            )
+        )
 
 
 registration_page = RegistrationPage()
