@@ -45,7 +45,7 @@ class RegistrationPage:
         return self
 
     def fill_hobby(self, value):
-        browser.element(f"//*[contains(text(),'{value}')]").click()
+        browser.element(f"//*[contains(text(),'{value}')]").perform(command=js.click)
         return self
 
     def upload_picture(self, value):
@@ -86,8 +86,8 @@ class RegistrationPage:
                              user.birth_date.strftime('%d'))
             .fill_subject(user.subject)
             .fill_hobby(user.hobby)
-            .upload_picture(user.upload_picture)
-            .fill_current_address(user.current_address)
+            .upload_picture(user.picture)
+            .fill_current_address(user.address)
             .fill_state(user.state)
             .fill_city(user.city)
             .submit()
@@ -99,14 +99,14 @@ class RegistrationPage:
                 f'{user.first_name} {user.last_name}',
                 user.email,
                 user.gender,
-                user.user_number,
-                f"{user.date_of_birth.strftime('%d')} "
-                f"{user.date_of_birth.strftime('%B')},"
-                f"{user.date_of_birth.strftime('%Y')}",
+                user.phone,
+                f"{user.birth_date.strftime('%d')} "
+                f"{user.birth_date.strftime('%B')},"
+                f"{user.birth_date.strftime('%Y')}",
                 user.subject,
                 user.hobby,
-                user.upload_picture,
-                user.current_address,
+                user.picture,
+                user.address,
                 f'{user.state} {user.city}'
             )
         )

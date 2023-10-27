@@ -9,4 +9,4 @@ def test_fill_form(open_browser):
     registration_page.register_user(user)
 
     # THEN
-    registration_page.should_register_user(user)
+    registration_page.should_registered_user(user)
