@@ -1,6 +1,10 @@
+import os
+
 import pytest
 from selene.api import *
 from selenium import webdriver
+
+from tools import attach
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -18,27 +22,32 @@ def setup_browser(request):
     options.add_argument('--disable-setuid-sandbox')
 
     selenoid_capability = {
-        'browserName': 'chrome',
-        'browserVersion': options.browser_version,
-        'selenoid:options':
-            {
-                'screenResolution': '1920x1080x24',
-                'enableVNC': True,
-                'enableVideo': True,
-                'enableLog': True,
-            },
+        "browserName": "chrome",
+        "browserVersion": "100.0",
+        "selenoid:options": {
+            "enableVNC": True,
+            "enableVideo": True
+        }
     }
+
+    login = os.getenv('LOGIN', 'user1')
+    password = os.getenv('PASSWORD', '1234')
+
     options.capabilities.update(selenoid_capability)
+    driver = webdriver.Remote(
+        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
+        options=options)
 
-    config.driver_options = options
-    config.window_width = 1920
-    config.window_height = 1080
-    config.reports_folder = './.reports'
-    config.save_screenshot_on_failure = True
-    config.save_page_source_on_failure = True
-    config.timeout = 4
-    config.base_url = 'https://demoqa.com'
+    browser.config.driver = driver
+    browser.config.window_width = 1400
+    browser.config.window_height = 1600
+    browser.config.base_url = 'https://demoqa.com'
 
-    yield browser
+    yield
+
+    attach.add_html(browser)
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_video(browser)
 
     browser.quit()
