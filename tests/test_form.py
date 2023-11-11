@@ -8,9 +8,9 @@ from allure_commons.types import Severity
 @allure.story('Тест сайта demoqa')
 @allure.feature('Тест заполнения формы')
 @allure.severity(Severity.NORMAL)
-@pytest.mark.usefixtures("open_browser")
+# @pytest.mark.usefixtures("open_browser")
 def test_fill_form():
-    with allure.description('Fill out the registration form'):
+    with allure.step('Fill out the registration form'):
         registration_page.open()
         registration_page.close_banner()
 

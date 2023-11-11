@@ -8,7 +8,7 @@ import allure
 class RegistrationPage:
     def open(self):
         with allure.step('Open registration page'):
-            browser.open('/automation-practice-form')
+            browser.open(f'https://demoqa.com/automation-practice-form')
 
     def close_banner(self):
         with allure.step('Close banner'):
