@@ -22,11 +22,11 @@ def setup_browser(request):
     options.add_argument('--disable-setuid-sandbox')
 
     selenoid_capability = {
-        "browserName": "chrome",
-        "browserVersion": "100.0",
-        "selenoid:options": {
-            "enableVNC": True,
-            "enableVideo": True
+        'browserName': 'chrome',
+        'browserVersion': '100.0',
+        'selenoid:options': {
+            'enableVNC': True,
+            'enableVideo': True
         }
     }
 
@@ -35,7 +35,7 @@ def setup_browser(request):
 
     options.capabilities.update(selenoid_capability)
     driver = webdriver.Remote(
-        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
+        command_executor=f'https://{login}:{password}@selenoid.autotests.cloud/wd/hub',
         options=options)
 
     browser.config.driver = driver
