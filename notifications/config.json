@@ -1,6 +1,6 @@
 {
   "base": {
-    "logo": "",
+    "logo": "resources/logo.jpg",
     "project": "",
     "environment": "prod",
     "comment": "some comment @whoisondutytoday",
